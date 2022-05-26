@@ -19,6 +19,9 @@ data class User(
 ) : UserDetails {
 
     override fun getUsername(): String = username
+    fun setUsername(name: String) {
+        username = name
+    }
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles
     }

@@ -2,7 +2,10 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
-<@l.logout />
+<div>
+    <@l.logout />
+    <span><a href="/user">user list</a></span>
+</div>
 <div>
     <form method="post" action="main">
         <input type="text" name="text" placeholder="Type a message">
@@ -16,7 +19,7 @@
     <input type="text"
            name="filter"
            placeholder="filter by tag"
-           value="<#if filter??>${filter}"<#if>>
+           value="${filter?ifExists}">
     <button type="submit">Find</button>
 </form>
 <#list messages as message>
