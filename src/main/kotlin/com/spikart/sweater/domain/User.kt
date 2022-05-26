@@ -31,5 +31,6 @@ data class User(
 }
 
 enum class Role: GrantedAuthority {
-    USER { override fun getAuthority() = name };
+    USER { override fun getAuthority() = name },
+    ADMIN { override fun getAuthority() = name };
 }

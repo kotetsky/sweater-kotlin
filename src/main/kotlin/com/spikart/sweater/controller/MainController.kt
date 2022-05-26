@@ -5,10 +5,10 @@ import com.spikart.sweater.domain.User
 import com.spikart.sweater.repository.MessageRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
 
 @Controller
 class MainController(
@@ -17,10 +17,16 @@ class MainController(
 
     @GetMapping("/main")
     fun main(
-        model: MutableMap<String, Any>
+        @RequestParam(required = false, defaultValue = "") filter: String,
+        model: Model
     ): String {
-        val messages: Iterable<Message> = messageRepository.findAll()
-        model["messages"] = messages
+        val messages = if (filter.isEmpty()) {
+            messageRepository.findAll()
+        } else {
+            messageRepository.findByTag(filter)
+        }
+        model.addAttribute("messages", messages)
+        model.addAttribute("filter", filter)
         return "main"
     }
 
@@ -36,30 +42,14 @@ class MainController(
         @AuthenticationPrincipal user: User,
         @RequestParam text: String,
         @RequestParam tag: String,
-        model: MutableMap<String, Any>,
-
-        ): String {
+        model: Model
+    ): String {
         val message = Message(text = text, tag = tag, author = user)
         messageRepository.save(message)
         val messages: Iterable<Message> = messageRepository.findAll()
 
-        model["messages"] = messages
+        model.addAttribute("messages", messages)
+        model.addAttribute("filter", "")
         return "main"
     }
-
-    @PostMapping("/filter")
-    fun filterMessage(
-        @RequestParam tag: String?,
-        model: MutableMap<String, Any>,
-    ): String {
-        val messages = if (tag.isNullOrBlank()) {
-            messageRepository.findAll()
-        } else {
-            messageRepository.findByTag(tag)
-        }
-        model["messages"] = messages
-
-        return "/main"
-    }
-
 }

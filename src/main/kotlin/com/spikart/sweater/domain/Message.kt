@@ -13,5 +13,5 @@ data class Message(
     @JoinColumn(name = "user_id")
     val author: User? = null
 ) {
-    fun getAuthorName() = author?.username ?: "<none>"
+    fun getAuthorName() = author?.username ?: "..none.."
 }

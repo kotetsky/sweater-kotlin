@@ -6,7 +6,7 @@
     <title>Sweater</title>
 </head>
 <body>
-<#nested />
+<#nested>
 </body>
 </html>
 </#macro>
