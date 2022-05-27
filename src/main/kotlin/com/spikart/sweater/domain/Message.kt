@@ -11,7 +11,9 @@ data class Message(
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    val author: User? = null
+    val author: User? = null,
+
+    val filename: String? = null
 ) {
     fun getAuthorName() = author?.username ?: "..none.."
 }
