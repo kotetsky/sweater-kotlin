@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.io.IOException
-import java.util.UUID
+import java.util.*
 
 const val UPLOAD_PATH = "upload.path"
+
 @Controller
 class MainController {
 
@@ -67,12 +68,13 @@ class MainController {
         file?.apply {
             val uploadDir = File(uploadPath)
             if (!uploadDir.exists()) {
-                uploadDir.mkdir()
+                uploadDir.mkdirs()
             }
 
             val uuid = UUID.randomUUID().toString()
             val fileName = "$uuid.${file.originalFilename}"
-            file.transferTo(File(fileName))
+
+            file.transferTo(File("$uploadPath/$fileName"))
             message = message.copy(
                 filename = fileName
             )
@@ -83,6 +85,6 @@ class MainController {
 
         model.addAttribute("messages", messages)
         model.addAttribute("filter", "")
-        return "main"
+        return "redirect:main"
     }
 }
