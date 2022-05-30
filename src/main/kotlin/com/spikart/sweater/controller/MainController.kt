@@ -66,6 +66,9 @@ class MainController {
         )
 
         file?.apply {
+            if (file.originalFilename.isNullOrEmpty()) {
+                return@apply
+            }
             val uploadDir = File(uploadPath)
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs()

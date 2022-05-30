@@ -18,10 +18,13 @@ data class User(
     var roles: MutableSet<Role> = mutableSetOf(Role.USER)
 ) : UserDetails {
 
+    fun isAdmin() = roles.contains(Role.ADMIN)
+
     override fun getUsername(): String = username
     fun setUsername(name: String) {
         username = name
     }
+
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return roles
     }

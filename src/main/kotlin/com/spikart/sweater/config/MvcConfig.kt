@@ -18,8 +18,9 @@ class MvcConfig : WebMvcConfigurer {
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        val resLocation = "file://$uploadPath/"
         registry.addResourceHandler("/img/**")
-            .addResourceLocations(resLocation)
+            .addResourceLocations("file://$uploadPath/")
+        registry.addResourceHandler("/static/**")
+            .addResourceLocations("classpath:/static/")
     }
 }
