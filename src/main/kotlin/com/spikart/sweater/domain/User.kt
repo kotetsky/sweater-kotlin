@@ -18,6 +18,10 @@ data class User(
     var roles: MutableSet<Role> = mutableSetOf(Role.USER)
 ) : UserDetails {
 
+    var email: String = ""
+    var activationCode: String = ""
+
+
     fun isAdmin() = roles.contains(Role.ADMIN)
 
     override fun getUsername(): String = username

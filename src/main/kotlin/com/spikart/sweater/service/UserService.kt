@@ -15,4 +15,9 @@ class UserService @Autowired constructor(
        return userRepository.findByUsername(username.orEmpty())
     }
 
+    fun addUser() {
+
+    }
+
+
 }
